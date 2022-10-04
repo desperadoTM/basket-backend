@@ -9,7 +9,7 @@ import ru.basket.plugins.*
 
 fun main() {
 
-    Database.connect("")
+    //Database.connect("")
 
 
     embeddedServer(CIO, port = 8080, host = "0.0.0.0") {

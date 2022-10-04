@@ -20,13 +20,19 @@ fun Application.configureLoginRouting() {
     routing {
         post("/login") {
             val receive = call.receive<LoginModel>()
-            if (InMemoryCache.userList.map {it.login}.contains(receive.login)) {
-                val token = UUID.randomUUID().toString()
-                InMemoryCache.token.add(TokenCache(receive.login, token))
-                call.respond(LoginResponse(token))
-                return@post
+            val first = InMemoryCache.userList.firstOrNull { it.login == receive.login }
+
+            if (first == null) {
+                call.respond(HttpStatusCode.BadRequest, "User not found")
+            } else {
+                if (first.password == receive.password) {
+                    val token = UUID.randomUUID().toString()
+                    InMemoryCache.token.add(TokenCache(receive.login, token))
+                    call.respond(LoginResponse(token))
+                } else {
+                   call.respond(HttpStatusCode.BadRequest, "Invalid password")
+                }
             }
-            call.respond(HttpStatusCode.BadRequest)
         }
     }
 }
