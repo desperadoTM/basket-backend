@@ -16,12 +16,12 @@ data class Test (
 fun Application.configureRouting() {
 
     routing {
-        get("/test") {
+        get("/") {
             call.respond(
                 listOf(
-                    Test(text = "Test message"),
-                    Test(text = "Echo test message"))
+                    Test(text = "Hello World!")
                 )
+            )
         }
     }
 }

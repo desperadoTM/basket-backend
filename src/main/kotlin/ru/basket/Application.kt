@@ -9,7 +9,10 @@ import ru.basket.plugins.*
 
 fun main() {
 
-    //Database.connect("")
+    Database.connect("jdbc:postgresql://localhost:8888/basket-backend",
+                    driver = "org.postgresql.Driver",
+                    manager = "postgresql",
+                    password = "qwerty_123")
 
 
     embeddedServer(CIO, port = 8080, host = "0.0.0.0") {
